@@ -5,9 +5,9 @@ from os import walk, path
 from os.path import join, dirname
 # from setuptools import setup, find_packages
 
-URL = "https://github.com/MenneBos/ovos-skill-HomeyflowTrigger"
-SKILL_CLAZZ = "HomeyFlowSkill"  # needs to match __init__.py class name
-PYPI_NAME = "ovos-skill-HomeyFlowTrigger"  # pip install PYPI_NAME
+URL = "https://github.com/MenneBos/ovos-skill-HomeyZoneTrigger"
+SKILL_CLAZZ = "HomeyZoneSkill"  # needs to match __init__.py class name
+PYPI_NAME = "ovos-skill-HomeyZoneTrigger"  # pip install PYPI_NAME
 
 # below derived from github url to ensure standard skill_id
 SKILL_AUTHOR, SKILL_NAME = URL.split(".com/")[-1].split("/")
@@ -51,7 +51,7 @@ def get_version():
     return version
 
 def find_resource_files():
-    resource_base_dirs = ("locale", "vocab", "nodejs", "shared", "intent", "dialog", "regex", "skill")
+    resource_base_dirs = ("locale", "nl-nl", "vocab", "nodejs", "intent", "dialog")
     base_dir = path.dirname(__file__)
     package_data = ["*.json"]
     for res in resource_base_dirs:
@@ -73,11 +73,13 @@ setup(
     long_description=long_description,
     url=URL,
     author=SKILL_AUTHOR,
-    description='A skill to trigger a flow in homey based on keywords',
+    description='A skill to trigger a zone in homey based on keywords and the use of n8n to use AI for sentence processing',
     author_email='your.email@example.com',
     license='Apache-2.0',
     install_requires=[
-        "paho-mqtt"
+        "ovos-plugin-manager>=0.0.1",
+        "ovos-skills-manager>=0.0.1",
+        "requests==2.31.0"
     ],
     include_package_data=True,
     package_dir={SKILL_PKG: ""},
