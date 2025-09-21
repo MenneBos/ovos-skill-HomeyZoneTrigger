@@ -115,7 +115,8 @@ class HomeyZoneSkill(OVOSSkill):
 
     def create_zone_voc_files(self):
         """Create .voc files directly from http response."""
-
+        
+        url = f"{self.homey_address}/api/manager/zones/zone"
         headers = {
             "Authorization": f"Bearer {self.homey_token}",
             "Content-Type": "application/json"
@@ -123,7 +124,7 @@ class HomeyZoneSkill(OVOSSkill):
 
         try:
             # GET request to Homey API  
-            response = requests.get(self.homey_address, headers=headers)
+            response = requests.get(url, headers=headers)
             response.raise_for_status()
 
             # Parse JSON response
@@ -265,7 +266,7 @@ class HomeyZoneSkill(OVOSSkill):
 
         try:
             response = requests.post(self.n8n_address, headers=headers, json=data)
-            
+
             response.raise_for_status()  # Raise an error for bad status codes
             result = response.json()
             self.log.info(f"✅ n8n response: {result}")
