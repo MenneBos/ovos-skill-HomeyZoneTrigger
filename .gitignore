@@ -1,0 +1,10 @@
+backlog.md
+zone_mappings.json
+*.sh
+*.crt
+*.key
+*.srl
+*.csr
+HTML/config.js
+config.json
+nodejs/package-lock.json
