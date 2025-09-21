@@ -77,9 +77,7 @@ setup(
     author_email='your.email@example.com',
     license='Apache-2.0',
     install_requires=[
-        "ovos-plugin-manager>=0.0.1",
-        "ovos-skills-manager>=0.0.1",
-        "requests==2.31.0"
+        "requests==2.32.5"
     ],
     include_package_data=True,
     package_dir={SKILL_PKG: ""},
