@@ -115,7 +115,7 @@ class HomeyZoneSkill(OVOSSkill):
 
     def create_zone_voc_files(self):
         """Create .voc files directly from http response."""
-        
+
         url = f"{self.homey_address}/api/manager/zones/zone"
         headers = {
             "Authorization": f"Bearer {self.homey_token}",
@@ -137,6 +137,9 @@ class HomeyZoneSkill(OVOSSkill):
 
                 self.log.info("✅ Zones saved to zone_mapping.json")
                 zone_names = [z["name"] for z in zones.values()]
+
+                # Zet alle namen in lowercase
+                zone_names = [z["name"].lower() for z in zones.values()]
 
                 # Ensure directory exists
                 os.makedirs(os.path.dirname(self.vocab_dir), exist_ok=True)
@@ -185,7 +188,7 @@ class HomeyZoneSkill(OVOSSkill):
             """
 
 
-    @intent_handler(IntentBuilder("homeyZone.intent").require("zone").require("licht"))
+    @intent_handler(IntentBuilder("homeyZone.intent").require("zones").require("licht"))
     def handle_start_zone(self, message):
         # Extract the utterance from the message
         utterance = message.data.get("utterance", "").strip().lower()
