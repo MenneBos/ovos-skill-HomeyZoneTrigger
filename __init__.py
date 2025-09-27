@@ -187,8 +187,7 @@ class HomeyZoneSkill(OVOSSkill):
 
             """
 
-
-    @intent_handler(IntentBuilder("homeyZone.intent").require("zones").require("licht"))
+    @intent_handler(IntentBuilder("homeyZone.intent").require("licht"))
     def handle_start_zone(self, message):
         # Extract the utterance from the message
         utterance = message.data.get("utterance", "").strip().lower()
