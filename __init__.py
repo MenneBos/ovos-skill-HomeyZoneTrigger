@@ -67,10 +67,10 @@ class HomeyZoneSkill(OVOSSkill):
         self.zone_mapping_path = os.path.expanduser("~/.config/ovos_skill_homeyzonetrigger/zone_mappings.json")
 
         # Remove all existing .voc files
-        self.clear_voc_files()
+        #self.clear_voc_files()
 
         # Recreate .voc files based on zone_mappings.json
-        self.create_zone_voc_files()
+        # self.create_zone_voc_files()
 
         # Register all .voc files so the Python script can use the vocab
         # !!!! dont think it is needs with intentbuilder 
@@ -187,7 +187,7 @@ class HomeyZoneSkill(OVOSSkill):
 
             """
 
-    @intent_handler(IntentBuilder("homeyZone.intent").require("zone").optionally("actie"))
+    @intent_handler(IntentBuilder("homeyZone.intent").require("zones").optionally("actie").optionally("licht"))
     def handle_start_zone(self, message):
         # Extract the utterance from the message
         utterance = message.data.get("utterance", "").strip().lower()
