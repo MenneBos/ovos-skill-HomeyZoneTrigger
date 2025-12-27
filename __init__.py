@@ -26,8 +26,9 @@ class HomeyZoneSkill(OVOSSkill):
         self.settings_change_callback = self.on_settings_changed
 
         # Load configuration from config.json
-        #self.config_path = os.path.join(self.root_dir, "nodejs", "config.json")
+        #self.config_path = os.path.join(self.root_dir, "config.json")
         self.config_path = os.path.expanduser("~/.config/ovos_skill_homeyzonetrigger/config.json")
+        self.zone_mapping_path = os.path.expanduser("~/.config/ovos_skill_homeyzonetrigger/zone_mappings.json")
         self.config = self._load_config()
 
         # Extract values from the configuration (safe extraction)
@@ -64,7 +65,7 @@ class HomeyZoneSkill(OVOSSkill):
         #self._setup_mqtt()
 
         # Other initialization tasks
-        self.zone_mapping_path = os.path.expanduser("~/.config/ovos_skill_homeyzonetrigger/zone_mappings.json")
+        
 
         # Remove all existing .voc files
         #self.clear_voc_files()
