@@ -1,0 +1,176 @@
+x-podman: &a1
+  userns_mode: keep-id
+  security_opt:
+    - label=disable
+x-logging: &a3
+  driver: json-file
+  options:
+    mode: non-blocking
+    max-buffer-size: 4m
+    max-size: 200m
+    max-file: "1"
+x-common-environment: &a4
+  TZ: ${TZ:-UTC}
+x-skill-resource-limits: &a2
+  deploy:
+    resources:
+      limits:
+        memory: 256M
+      reservations:
+        memory: 64M
+x-skill-base: &a5
+  <<:
+    - *a1
+    - *a2
+  restart: unless-stopped
+  logging: *a3
+  user: ${MAIN_UID:-1000}:${MAIN_GID:-1000}
+  environment:
+    <<: *a4
+  network_mode: host
+  volumes:
+    - ${CONFIG_BASE_DIR}/mycroft:/home/ovos/.config/mycroft
+    - ${DATA_BASE_DIR}/mycroft:/home/ovos/.local/share/mycroft
+    - ${CACHE_BASE_DIR}/mycroft:/home/ovos/.cache/mycroft
+    - ${STATE_BASE_DIR}/mycroft:/home/ovos/.local/state/mycroft
+    - ${TMP_FOLDER}:/tmp/mycroft
+    - ${NLTK_DIR}:/home/ovos/nltk_data
+    - ${CACHE_BASE_DIR}/ovos_gui:/home/ovos/.cache/ovos_gui
+services:
+  ovos_skill_easter_eggs:
+    <<: *a5
+    build:
+      context: ./skill-easter-eggs
+      dockerfile: Dockerfile
+    container_name: ovos_skill_easter_eggs
+    hostname: ovos_skill_easter_eggs
+    image: jarbasai/ovos-skill-easter-eggs:latest
+  ovos_skill_wikipedia:
+    <<: *a5
+    build:
+      context: ./skill-wikipedia
+      dockerfile: Dockerfile
+    container_name: ovos_skill_wikipedia
+    hostname: ovos_skill_wikipedia
+    image: jarbasai/ovos-skill-wikipedia:latest
+  ovos_skill_weather:
+    <<: *a5
+    build:
+      context: ./skill-weather
+      dockerfile: Dockerfile
+    container_name: ovos_skill_weather
+    hostname: ovos_skill_weather
+    image: jarbasai/ovos-skill-weather:latest
+  ovos_skill_volume:
+    <<: *a5
+    build:
+      context: ./skill-volume
+      dockerfile: Dockerfile
+    container_name: ovos_skill_volume
+    hostname: ovos_skill_volume
+    image: jarbasai/ovos-skill-volume:latest
+  ovos_skill_date_time:
+    <<: *a5
+    build:
+      context: ./skill-date-time
+      dockerfile: Dockerfile
+    container_name: ovos_skill_date_time
+    hostname: ovos_skill_date_time
+    image: jarbasai/ovos-skill-date-time:latest
+  ovos_skill_personal:
+    <<: *a5
+    build:
+      context: ./skill-personal
+      dockerfile: Dockerfile
+    container_name: ovos_skill_personal
+    hostname: ovos_skill_personal
+    image: jarbasai/ovos-skill-personal:latest
+  ovos_skill_hello_world:
+    <<: *a5
+    build:
+      context: ./skill-hello-world
+      dockerfile: Dockerfile
+    container_name: ovos_skill_hello_world
+    hostname: ovos_skill_hello_world
+    image: jarbasai/ovos-skill-hello-world:latest
+  ovos_skill_alerts:
+    <<: *a5
+    build:
+      context: ./skill-alerts
+      dockerfile: Dockerfile
+    container_name: ovos_skill_alerts
+    hostname: ovos_skill_alerts
+    image: jarbasai/ovos-skill-alerts:latest
+  ovos_skill_ggwave:
+    <<: *a5
+    build:
+      context: ./skill-ggwave
+      dockerfile: Dockerfile
+    container_name: ovos_skill_ggwave
+    hostname: ovos_skill_ggwave
+    image: jarbasai/ovos-skill-ggwave:latest
+  ovos_skill_duckduckgo:
+    <<: *a5
+    build:
+      context: ./skill-duckduckgo
+      dockerfile: Dockerfile
+    container_name: ovos_skill_duckduckgo
+    hostname: ovos_skill_duckduckgo
+    image: jarbasai/ovos-skill-duckduckgo:latest
+  ovos_skill_wordnet:
+    <<: *a5
+    build:
+      context: ./skill-wordnet
+      dockerfile: Dockerfile
+    container_name: ovos_skill_wordnet
+    hostname: ovos_skill_wordnet
+    image: jarbasai/ovos-skill-wordnet:latest
+  ovos_skill_wolfie:
+    <<: *a5
+    build:
+      context: ./skill-wolfie
+      dockerfile: Dockerfile
+    container_name: ovos_skill_wolfie
+    hostname: ovos_skill_wolfie
+    image: jarbasai/ovos-skill-wolfie:latest
+  ovos_skill_jokes:
+    <<: *a5
+    build:
+      context: ./skill-jokes
+      dockerfile: Dockerfile
+    container_name: ovos_skill_jokes
+    hostname: ovos_skill_jokes
+    image: jarbasai/ovos-skill-jokes:latest
+  ovos_skill_parrot:
+    <<: *a5
+    build:
+      context: ./skill-parrot
+      dockerfile: Dockerfile
+    container_name: ovos_skill_parrot
+    hostname: ovos_skill_parrot
+    image: jarbasai/ovos-skill-parrot:latest
+  ovos_skill_randomness:
+    <<: *a5
+    build:
+      context: ./skill-randomness
+      dockerfile: Dockerfile
+    container_name: ovos_skill_randomness
+    hostname: ovos_skill_randomness
+    image: jarbasai/ovos-skill-randomness:latest
+  ovos_skill_camera:
+    <<: *a5
+    build:
+      context: ./skill-camera
+      dockerfile: Dockerfile
+    container_name: ovos_skill_camera
+    hostname: ovos_skill_camera
+    image: jarbasai/ovos-skill-camera:latest
+  ovos_skill_wikihow:
+    <<: *a5
+    build:
+      context: ./skill-wikihow
+      dockerfile: Dockerfile
+    container_name: ovos_skill_wikihow
+    hostname: ovos_skill_wikihow
+    image: jarbasai/ovos-skill-wikihow:latest
+networks: {}

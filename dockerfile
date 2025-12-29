@@ -16,22 +16,27 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Omgevingsvariabelen (runtime kan deze overrulen)
 ENV OVOS_USER=ovos \
+    HOME=/home/ovos \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1
 
-# Gebruik bestaande user (via userns keep-id)
-USER $OVOS_USER
+# Gebruik bestaande user
+RUN useradd -m -s /bin/bash ovos
 
-# Skill code in container
-WORKDIR /home/ovos/ovos-skill-homeyzonetrigger
+# Skill code in container (altijd als root)
+WORKDIR /home/ovos/ovos-skill-HomeyZoneTrigger
 COPY . .
 
+# 🔑 FIX: ownership corrigeren
+RUN chown -R ovos:ovos /home/ovos
+USER ovos
+
 # Install Node dependencies
-WORKDIR /home/$OVOS_USER/homeyzonetrigger/nodejs
-RUN if [ -f package.json ]; then npm ci; else npm install homey-api; fi
+WORKDIR /home/ovos/ovos-skill-HomeyZoneTrigger/nodejs
+RUN npm install homey-api
 
 # Python deps 
-WORKDIR /home/ovos/ovos-skill-homeyzonetrigger
+WORKDIR /home/ovos/ovos-skill-HomeyZoneTrigger
 RUN pip install --upgrade pip \
  && pip install -e .
 
